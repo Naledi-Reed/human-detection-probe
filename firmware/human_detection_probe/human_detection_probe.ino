@@ -1,95 +1,66 @@
 #include <LiquidCrystal.h>
 
-// Human Detection Probe - portfolio firmware
-// Arduino Uno pin allocation
 const int PIR_PIN = 2;
-const int BUTTON_PIN = 7;
-const int LED_PIN = 8;
-const int BUZZER_PIN = 9;
+const int LED_PIN = 3;
+const int PIEZO_PIN = 4;
+const int BUTTON_PIN = 5;
 
-// LCD pins: RS, Enable, D4, D5, D6, D7
-LiquidCrystal lcd(12, 11, 5, 4, 3, 6);
+LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
-bool lastMotionState = false;
-unsigned long lastDisplayUpdate = 0;
+bool previousButtonState = false;
+unsigned long lastButtonChange = 0;
+const unsigned long DEBOUNCE_MS = 50;
 
-void showReadyScreen() {
-  lcd.clear();
+void showStatus(const char* line1, const char* line2) {
   lcd.setCursor(0, 0);
-  lcd.print("Detection Probe");
-  lcd.setCursor(0, 1);
-  lcd.print("Status: READY");
-}
-
-void showMotionAlert() {
-  lcd.clear();
+  lcd.print("                ");
   lcd.setCursor(0, 0);
-  lcd.print("HUMAN PRESENCE");
-  lcd.setCursor(0, 1);
-  lcd.print("CHECK LOCATION");
-}
-
-void runDiagnosticTest() {
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("DIAGNOSTIC TEST");
-
-  digitalWrite(LED_PIN, HIGH);
-  tone(BUZZER_PIN, 1200, 500);
+  lcd.print(line1);
 
   lcd.setCursor(0, 1);
-  lcd.print("LED + BUZZER OK");
-  delay(1000);
-
-  digitalWrite(LED_PIN, LOW);
-  noTone(BUZZER_PIN);
-  showReadyScreen();
+  lcd.print("                ");
+  lcd.setCursor(0, 1);
+  lcd.print(line2);
 }
 
 void setup() {
   pinMode(PIR_PIN, INPUT);
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
   pinMode(LED_PIN, OUTPUT);
-  pinMode(BUZZER_PIN, OUTPUT);
-
-  digitalWrite(LED_PIN, LOW);
-  noTone(BUZZER_PIN);
+  pinMode(PIEZO_PIN, OUTPUT);
+  pinMode(BUTTON_PIN, INPUT);
 
   lcd.begin(16, 2);
-  lcd.clear();
-  lcd.print("Initialising...");
-  delay(1500);
-
-  showReadyScreen();
+  showStatus("System Ready", "Initialising...");
+  delay(2000);
+  showStatus("Monitoring...", "Status: CLEAR");
 }
 
 void loop() {
   const bool motionDetected = digitalRead(PIR_PIN) == HIGH;
-  const bool diagnosticPressed = digitalRead(BUTTON_PIN) == LOW;
+  const bool rawButtonState = digitalRead(BUTTON_PIN) == HIGH;
 
-  if (diagnosticPressed) {
-    runDiagnosticTest();
-    delay(250);  // Basic button debounce
-    return;
+  if (rawButtonState != previousButtonState &&
+      millis() - lastButtonChange >= DEBOUNCE_MS) {
+    previousButtonState = rawButtonState;
+    lastButtonChange = millis();
   }
 
   if (motionDetected) {
+    showStatus("MOTION DETECTED!", "Status: ALERT");
     digitalWrite(LED_PIN, HIGH);
-    tone(BUZZER_PIN, 1000);
-
-    if (!lastMotionState) {
-      showMotionAlert();
-    }
-  } else {
+    tone(PIEZO_PIN, 1000);
+  } else if (previousButtonState) {
+    showStatus("Button Pressed", "Status: TESTING");
+    digitalWrite(LED_PIN, HIGH);
+    tone(PIEZO_PIN, 1500);
+    delay(200);
+    noTone(PIEZO_PIN);
     digitalWrite(LED_PIN, LOW);
-    noTone(BUZZER_PIN);
-
-    if (lastMotionState || millis() - lastDisplayUpdate > 5000) {
-      showReadyScreen();
-      lastDisplayUpdate = millis();
-    }
+  } else {
+    showStatus("Monitoring...", "Status: CLEAR");
+    digitalWrite(LED_PIN, LOW);
+    noTone(PIEZO_PIN);
   }
 
-  lastMotionState = motionDetected;
   delay(100);
 }
