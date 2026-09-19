@@ -1,0 +1,11 @@
+Component,Quantity,Purpose
+Arduino Uno,1,Microcontroller and control logic
+PIR motion sensor,1,Detects changes in infrared energy
+16x2 LCD,1,Displays ready and detection messages
+LED,1,Visual alert
+Piezo buzzer,1,Audio alert
+Pushbutton,1,Manual diagnostic test
+220 ohm resistor,1,Limits LED current
+10 kilo-ohm resistor,1,Button pull-down
+Breadboard,1,Circuit assembly
+Jumper wires,As required,Electrical connections
