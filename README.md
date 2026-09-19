@@ -1,78 +1,41 @@
-# Human Detection Probe
+<div align="center">
 
-An Arduino-based search-and-rescue concept that detects changes in infrared energy and produces immediate visual and audio alerts.
+# 🚨 Human Detection Probe
 
-**Status:** Functional portfolio prototype  
-**Module:** IOT261 - Internet of Things  
-**Platform:** Arduino Uno and Tinkercad
+**Arduino prototype with PIR detection, LCD status and audio-visual alerts**
 
-## The problem
+[![Firmware](https://img.shields.io/badge/OPEN_ARDUINO_FIRMWARE-B6FF00?style=for-the-badge&logo=arduino&logoColor=07110D)](firmware/human_detection_probe/human_detection_probe.ino)
+[![Pin Map](https://img.shields.io/badge/OPEN_PIN_MAP-101820?style=for-the-badge&logo=arduino&logoColor=B6FF00)](docs/PIN-MAP.csv)
+[![Download](https://img.shields.io/badge/DOWNLOAD_COMPLETE_PROJECT-B6FF00?style=for-the-badge&logo=github&logoColor=07110D)](https://github.com/Naledi-Reed/human-detection-probe/archive/refs/heads/main.zip)
 
-After an earthquake or structural collapse, rescuers need simple tools that can indicate possible human presence in areas that are difficult to inspect safely.
+</div>
 
-This prototype uses a PIR sensor as a basic presence-detection input. When movement is detected, the system activates an LED, buzzer and LCD warning.
+## Purpose
 
-## Hardware design
+This search-and-rescue concept uses a PIR sensor as a basic presence-detection input. When infrared movement is detected, the Arduino activates an LED, buzzer and LCD warning. A pushbutton runs a diagnostic output test.
 
-- Arduino Uno
-- PIR motion sensor
-- 16x2 LCD
-- LED
-- Piezo buzzer
-- Pushbutton for diagnostics
-- Resistors and breadboard wiring
+## Actual project files
 
-## System behaviour
+| File | Purpose |
+|---|---|
+| [human_detection_probe.ino](firmware/human_detection_probe/human_detection_probe.ino) | Complete Arduino firmware |
+| [BILL-OF-MATERIALS.csv](docs/BILL-OF-MATERIALS.csv) | Editable component list |
+| [PIN-MAP.csv](docs/PIN-MAP.csv) | Editable wiring and pin allocation |
+| [technical-summary.md](docs/technical-summary.md) | Technical explanation |
+| [circuit-schematic.png](evidence/circuit-schematic.png) | Circuit schematic |
+| [tinkercad-circuit-diagram.png](evidence/tinkercad-circuit-diagram.png) | Prototype layout |
 
-```text
-PIR detects movement
-        |
-        v
-Arduino evaluates input
-        |
-        +--> LED warning
-        +--> Buzzer alert
-        +--> LCD message
+## Run it
 
-Diagnostic button
-        |
-        +--> Tests LED and buzzer
-```
-
-## Firmware
-
-[Open the Arduino source code](firmware/human_detection_probe/human_detection_probe.ino)
-
-The firmware includes:
-
-- PIR input monitoring
-- Audio and visual alert control
-- LCD status messages
-- Pushbutton diagnostic test
-- Basic button debounce
-- Automatic return to the ready state
-
-## Run the simulation
-
-1. Rebuild the circuit using the diagram in the evidence folder.
-2. Open the Arduino sketch in the Arduino IDE or Tinkercad Circuits.
-3. Confirm the pin allocation in the source comments.
+1. Download the repository ZIP or clone it.
+2. Open the INO file in Arduino IDE or recreate it in Tinkercad Circuits.
+3. Build the circuit using the pin map and diagrams.
 4. Start the simulation.
-5. Trigger the PIR sensor to test the detection alert.
-6. Press the diagnostic button to test the output components.
+5. Trigger the PIR sensor and test the diagnostic button.
 
-## Evidence
+## Important limitation
 
-[View the circuit diagram and schematic](evidence/)
+A PIR sensor detects changes in infrared energy; it does not prove that a human has been identified. A real rescue device requires additional sensors, environmental protection and professional validation.
 
-## Limitations
-
-A PIR sensor indicates changes in infrared energy; it does not prove that a person has been identified. A real rescue device would require additional sensors, environmental protection, testing and professional validation.
-
-## Skills demonstrated
-
-- Embedded-system design
-- Arduino C++
-- Sensor input and actuator output
-- Circuit modelling
-- Safety-aware technical documentation
+**Module origin:** IOT261 — Internet of Things  
+**Status:** Functional portfolio prototype with firmware and editable build files
