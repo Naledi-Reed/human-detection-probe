@@ -1,0 +1,13 @@
+Arduino Pin,Connected Component,Direction,Function
+2,PIR sensor output,Input,Motion signal
+4,Diagnostic pushbutton,Input,Manual output test
+8,LED,Output,Visual warning
+9,Piezo buzzer,Output,Audio warning
+12,LCD RS,Output,LCD register select
+11,LCD Enable,Output,LCD enable
+5,LCD D4,Output,LCD data
+6,LCD D5,Output,LCD data
+7,LCD D6,Output,LCD data
+3,LCD D7,Output,LCD data
+5V,Sensor and LCD power,Power,Supply
+GND,Common ground,Power,Return path
