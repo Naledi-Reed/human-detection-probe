@@ -22,6 +22,7 @@ This search-and-rescue concept uses a PIR sensor as a basic presence-detection i
 | [BILL-OF-MATERIALS.csv](docs/BILL-OF-MATERIALS.csv) | Editable component list |
 | [PIN-MAP.csv](docs/PIN-MAP.csv) | Editable wiring and pin allocation |
 | [technical-summary.md](docs/technical-summary.md) | Technical explanation |
+| [Portfolio technical report](docs/IOT261_Human_Detection_Probe_Portfolio_Edition.docx) | Sanitised Word edition of the original technical report |
 | [circuit-schematic.png](evidence/circuit-schematic.png) | Circuit schematic |
 | [tinkercad-circuit-diagram.png](evidence/tinkercad-circuit-diagram.png) | Prototype layout |
 
